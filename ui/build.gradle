@@ -1,0 +1,29 @@
+plugins {
+    id 'java-library'
+}
+
+ext {
+    moduleName = 'drawer.ui'
+    javaFxVersion = '11.0.2'
+}
+
+dependencies {
+    implementation project(':logic')
+    //    implementation project(':util')
+
+    implementation "org.openjfx:javafx-base:${javaFxVersion}:${platform}"
+    implementation "org.openjfx:javafx-graphics:${javaFxVersion}:${platform}"
+    implementation "org.openjfx:javafx-controls:${javaFxVersion}:${platform}"
+    implementation "org.openjfx:javafx-fxml:${javaFxVersion}:${platform}"
+}
+
+afterEvaluate {
+    compileJava {
+        doLast {
+            options.compilerArgs = [
+                    '--module-path', classpath.asPath
+            ]
+            classpath = files()
+        }
+    }
+}

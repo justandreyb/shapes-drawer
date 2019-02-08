@@ -1,0 +1,13 @@
+plugins {
+    id 'java-library'
+}
+
+ext.moduleName = 'drawer.logic'
+
+dependencies {
+    implementation project(":util")
+    
+    implementation 'com.google.guava:guava:22.0'
+
+    testImplementation 'junit:junit:4.12'
+}

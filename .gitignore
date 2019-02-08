@@ -1,0 +1,12 @@
+# IDE
+.idea/
+*.ipr
+*.iml
+
+# Output
+target/
+build/
+out/
+
+# Other
+.gradle/
