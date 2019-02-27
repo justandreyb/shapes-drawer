@@ -9,7 +9,8 @@ ext {
 
 dependencies {
     implementation project(':logic')
-    //    implementation project(':util')
+    implementation project(':model')
+    implementation project(':util')
 
     implementation "org.openjfx:javafx-base:${javaFxVersion}:${platform}"
     implementation "org.openjfx:javafx-graphics:${javaFxVersion}:${platform}"

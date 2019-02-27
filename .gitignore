@@ -10,3 +10,4 @@ out/
 
 # Other
 .gradle/
+*.hprof
