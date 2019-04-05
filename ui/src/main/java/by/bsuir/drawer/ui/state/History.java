@@ -12,11 +12,11 @@ import by.bsuir.drawer.model.shape.Shape;
 public class History {
 
     private List<SerializableBiFunction<Shape, GraphicsContext>> drawingStack;
-    private List<Shape> drawedShapes;
+    private List<Shape> drawnShapes;
 
     public History() {
         drawingStack = new LinkedList<>();
-        drawedShapes = new ArrayList<>();
+        drawnShapes = new ArrayList<>();
     }
 
     public <S extends Shape> void addToDrawing(SerializableBiFunction<S, GraphicsContext> drawingFunction) {
@@ -24,11 +24,7 @@ public class History {
     }
 
     public <S extends Shape> void addShape(S shape) {
-        drawedShapes.add(shape);
-    }
-
-    public SerializableBiFunction<Shape, GraphicsContext> getLastDrawingFunction() {
-        return drawingStack.get(drawingStack.size() - 1);
+        drawnShapes.add(shape);
     }
 
     public List<SerializableBiFunction<Shape, GraphicsContext>> getDrawingCommands() {
@@ -39,4 +35,7 @@ public class History {
         drawingStack.remove(drawingStack.size() - 1);
     }
 
+    public List<Shape> getDrawnShapes() {
+        return drawnShapes;
+    }
 }

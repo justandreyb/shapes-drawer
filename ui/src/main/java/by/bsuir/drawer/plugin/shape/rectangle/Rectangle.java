@@ -1,17 +1,20 @@
-package by.bsuir.drawer.plugin.shape.square;
+package by.bsuir.drawer.plugin.shape.rectangle;
 
 import by.bsuir.drawer.model.point.Point;
 import by.bsuir.drawer.model.shape.Shape;
 
-public class Square extends Shape {
+public class Rectangle extends Shape {
 
     private Point startPoint;
 
     private Double width;
 
-    public Square(Point startPoint, Double width) {
+    private Double height;
+
+    public Rectangle(Point startPoint, Double width, Double height) {
         this.startPoint = startPoint;
         this.width = width;
+        this.height = height;
     }
 
     public Point getStartPoint() {
@@ -30,11 +33,20 @@ public class Square extends Shape {
         this.width = width;
     }
 
+    public Double getHeight() {
+        return height;
+    }
+
+    public void setHeight(Double height) {
+        this.height = height;
+    }
+
     @Override
     public String toString() {
-        return "Square{" +
+        return "Rectangle{" +
             "startPoint=" + startPoint +
             ", width=" + width +
+            ", height=" + height +
             "} " + super.toString();
     }
 }

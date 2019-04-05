@@ -40,4 +40,12 @@ public class Line extends Shape {
     public void setEndPoint(Point endPoint) {
         this.endPoint = endPoint;
     }
+
+    @Override
+    public String toString() {
+        return "Line{" +
+            "startPoint=" + startPoint +
+            ", endPoint=" + endPoint +
+            "} " + super.toString();
+    }
 }

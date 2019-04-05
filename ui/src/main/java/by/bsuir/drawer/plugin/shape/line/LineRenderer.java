@@ -42,7 +42,6 @@ public class LineRenderer implements Renderer {
 
             context.strokeLine(line.getStartPoint().getX(), line.getStartPoint().getY(),
                 mouseEvent.getX(), mouseEvent.getY());
-            context.stroke();
             context.closePath();
 
             return line;

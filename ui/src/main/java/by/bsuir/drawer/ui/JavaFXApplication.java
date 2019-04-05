@@ -16,6 +16,7 @@ public class JavaFXApplication extends Application {
 
     @Override
     public void start(Stage stage) {
+        initializeUIContext(stage);
         loadPlugins();
 
         Scene scene = new Scene(new Workspace());
@@ -28,6 +29,10 @@ public class JavaFXApplication extends Application {
 
     private void loadPlugins() {
         Plugins.getShapesPlugins().forEach(UIContext.get()::registerShape);
+    }
+
+    private void initializeUIContext(Stage primaryStage) {
+        UIContext.get().setPrimaryStage(primaryStage);
     }
 
 

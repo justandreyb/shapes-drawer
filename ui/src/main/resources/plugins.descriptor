@@ -1,5 +1,6 @@
 by.bsuir.drawer.plugin.shape.dot.DotPlugin;
 by.bsuir.drawer.plugin.shape.line.LinePlugin;
+by.bsuir.drawer.plugin.shape.ellipse.EllipsePlugin;
 by.bsuir.drawer.plugin.shape.circle.CirclePlugin;
-by.bsuir.drawer.plugin.shape.triangle.TrianglePlugin;
+by.bsuir.drawer.plugin.shape.rectangle.RectanglePlugin;
 by.bsuir.drawer.plugin.shape.square.SquarePlugin;

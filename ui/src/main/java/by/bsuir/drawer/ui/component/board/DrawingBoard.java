@@ -29,7 +29,7 @@ public class DrawingBoard extends AnchorPane implements SettingsChangeListenable
         canvas.heightProperty().bind(this.heightProperty());
         context = canvas.getGraphicsContext2D();
         context.setLineWidth(getSettings().getLineWidth());
-        history = new History();
+        history = UIContext.get().getHistory();
 
         // Clear context
         history.addToDrawing((n, context) -> {
@@ -63,27 +63,6 @@ public class DrawingBoard extends AnchorPane implements SettingsChangeListenable
             Holder shapeHolder = new Holder();
             history.getDrawingCommands().forEach(command ->
                 shapeHolder.setShape(command.apply(shapeHolder.getShape(), context)));
-//            if (drowbtn.isSelected()) {
-//                context.lineTo(e.getX(), e.getY());
-            /*} else if (rubberbtn.isSelected()) {
-                double lineWidth = context.getLineWidth();
-                context.clearRect(e.getX() - lineWidth / 2, e.getY() - lineWidth / 2, lineWidth, lineWidth);
-            } else if (linebtn.isSelected()) {
-                line.setStartX(e.getX());
-                line.setStartY(e.getY());
-            } else if (rectbtn.isSelected()) {
-                rect.setX(e.getX());
-                rect.setY(e.getY());
-            } else if (circlebtn.isSelected()) {
-                circ.setCenterX(e.getX());
-                circ.setCenterY(e.getY());
-            } else if (elpslebtn.isSelected()) {
-                elps.setCenterX(e.getX());
-                elps.setCenterY(e.getY());
-            } else if (textbtn.isSelected()) {
-                context.fillText(text.getText(), e.getX(), e.getY());
-                context.strokeText(text.getText(), e.getX(), e.getY());
-            }*/
         });
     }
 
@@ -96,13 +75,6 @@ public class DrawingBoard extends AnchorPane implements SettingsChangeListenable
             Holder shapeHolder = new Holder();
             history.getDrawingCommands().forEach(command ->
                 shapeHolder.setShape(command.apply(shapeHolder.getShape(), context)));
-//            if (drowbtn.isSelected())
-//            context.lineTo(e.getX(), e.getY());
-//            context.stroke();
-            /*} else if (rubberbtn.isSelected()) {
-                double lineWidth = context.getLineWidth();
-                context.clearRect(e.getX() - lineWidth / 2, e.getY() - lineWidth / 2, lineWidth, lineWidth);
-            }*/
         });
     }
 
@@ -115,62 +87,6 @@ public class DrawingBoard extends AnchorPane implements SettingsChangeListenable
             Holder shapeHolder = new Holder();
             history.getDrawingCommands().forEach(command ->
                 shapeHolder.setShape(command.apply(shapeHolder.getShape(), context)));
-//            if (drowbtn.isSelected()) {
-//                context.lineTo(e.getX(), e.getY());
-//                context.stroke();
-//                context.closePath();
-            /*} else if (rubberbtn.isSelected()) {
-                double lineWidth = context.getLineWidth();
-                context.clearRect(e.getX() - lineWidth / 2, e.getY() - lineWidth / 2, lineWidth, lineWidth);
-            } else if (linebtn.isSelected()) {
-                line.setEndX(e.getX());
-                line.setEndY(e.getY());
-                context.strokeLine(line.getStartX(), line.getStartY(), line.getEndX(), line.getEndY());
-
-            } else if (rectbtn.isSelected()) {
-                rect.setWidth(Math.abs((e.getX() - rect.getX())));
-                rect.setHeight(Math.abs((e.getY() - rect.getY())));
-                //rect.setX((rect.getX() > e.getX()) ? e.getX(): rect.getX());
-                if (rect.getX() > e.getX()) {
-                    rect.setX(e.getX());
-                }
-                //rect.setY((rect.getY() > e.getY()) ? e.getY(): rect.getY());
-                if (rect.getY() > e.getY()) {
-                    rect.setY(e.getY());
-                }
-
-                context.fillRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
-                context.strokeRect(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
-
-
-            } else if (circlebtn.isSelected()) {
-                circ.setRadius((Math.abs(e.getX() - circ.getCenterX()) + Math.abs(e.getY() - circ.getCenterY())) / 2);
-
-                if (circ.getCenterX() > e.getX()) {
-                    circ.setCenterX(e.getX());
-                }
-                if (circ.getCenterY() > e.getY()) {
-                    circ.setCenterY(e.getY());
-                }
-
-                context.fillOval(circ.getCenterX(), circ.getCenterY(), circ.getRadius(), circ.getRadius());
-                context.strokeOval(circ.getCenterX(), circ.getCenterY(), circ.getRadius(), circ.getRadius());
-
-            } else if (elpslebtn.isSelected()) {
-                elps.setRadiusX(Math.abs(e.getX() - elps.getCenterX()));
-                elps.setRadiusY(Math.abs(e.getY() - elps.getCenterY()));
-
-                if (elps.getCenterX() > e.getX()) {
-                    elps.setCenterX(e.getX());
-                }
-                if (elps.getCenterY() > e.getY()) {
-                    elps.setCenterY(e.getY());
-                }
-
-                context.strokeOval(elps.getCenterX(), elps.getCenterY(), elps.getRadiusX(), elps.getRadiusY());
-                context.fillOval(elps.getCenterX(), elps.getCenterY(), elps.getRadiusX(), elps.getRadiusY());
-
-            }*/
         });
     }
 

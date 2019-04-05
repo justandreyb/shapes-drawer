@@ -26,4 +26,11 @@ public class Dot extends Shape {
     public void setPoint(Point point) {
         this.point = point;
     }
+
+    @Override
+    public String toString() {
+        return "Dot{" +
+            "point=" + point +
+            "} " + super.toString();
+    }
 }

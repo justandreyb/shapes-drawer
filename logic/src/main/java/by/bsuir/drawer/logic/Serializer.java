@@ -12,7 +12,7 @@ import de.undercouch.bson4jackson.BsonFactory;
 
 public class Serializer {
 
-    public static void serialize(List<Object> objects, String filePath) {
+    public static void serialize(List<?> objects, String filePath) {
         BsonFactory factory = new BsonFactory();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ObjectMapper mapper = new ObjectMapper(factory);
@@ -22,6 +22,20 @@ public class Serializer {
             boolean success = file.delete();
             success &= file.createNewFile();
             baos.writeTo(new FileOutputStream(new File(filePath)));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void serialize(List<?> objects, File file) {
+        BsonFactory factory = new BsonFactory();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectMapper mapper = new ObjectMapper(factory);
+        try {
+            mapper.writeValue(baos, objects);
+            boolean success = file.delete();
+            success &= file.createNewFile();
+            baos.writeTo(new FileOutputStream(file));
         } catch (IOException e) {
             e.printStackTrace();
         }
