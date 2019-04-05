@@ -6,8 +6,12 @@ ext.moduleName = 'drawer.logic'
 
 dependencies {
     implementation project(":util")
-    
+
     implementation 'com.google.guava:guava:22.0'
+    implementation 'org.mongodb:bson:3.10.1'
+    implementation 'commons-io:commons-io:2.6'
+    implementation 'de.undercouch:bson4jackson:2.9.2'
+    implementation 'org.mindrot:jbcrypt:0.3m'
 
     testImplementation 'junit:junit:4.12'
 }

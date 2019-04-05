@@ -1,6 +1,9 @@
 package by.bsuir.drawer.ui;
 
+import by.bsuir.drawer.plugin.Plugins;
 import by.bsuir.drawer.ui.component.Workspace;
+import by.bsuir.drawer.ui.settings.UIContext;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -13,8 +16,7 @@ public class JavaFXApplication extends Application {
 
     @Override
     public void start(Stage stage) {
-//        Parent root = FXMLLoader.load(getClass().getResource("layout.fxml"));
-//        scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
+        loadPlugins();
 
         Scene scene = new Scene(new Workspace());
 
@@ -22,6 +24,10 @@ public class JavaFXApplication extends Application {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+
+    private void loadPlugins() {
+        Plugins.getShapesPlugins().forEach(UIContext.get()::registerShape);
     }
 
 

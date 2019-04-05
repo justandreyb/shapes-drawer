@@ -1,6 +1,7 @@
-package by.bsuir.drawer.model.shape;
+package by.bsuir.drawer.plugin.shape.line;
 
 import by.bsuir.drawer.model.point.Point;
+import by.bsuir.drawer.model.shape.Shape;
 
 /**
  * Simple line which contains start point and end point.

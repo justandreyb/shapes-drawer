@@ -3,30 +3,43 @@ package by.bsuir.drawer.ui.component.board;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Font;
 
+import by.bsuir.drawer.model.shape.Shape;
+import by.bsuir.drawer.ui.render.Renderer;
 import by.bsuir.drawer.ui.settings.Settings;
 import by.bsuir.drawer.ui.settings.SettingsChangeListenable;
 import by.bsuir.drawer.ui.settings.SettingsEditable;
+import by.bsuir.drawer.ui.settings.UIContext;
+import by.bsuir.drawer.ui.state.History;
 
 public class DrawingBoard extends AnchorPane implements SettingsChangeListenable, SettingsEditable {
 
     private GraphicsContext context;
+    private ResizableCanvas canvas;
+    private Renderer renderer;
+    private History history;
 
     public DrawingBoard() {
         super();
         setMinHeight(600);
         setMinWidth(800);
 
-        var canvas = new ResizableCanvas();
+        canvas = new ResizableCanvas();
         canvas.widthProperty().bind(this.widthProperty());
         canvas.heightProperty().bind(this.heightProperty());
         context = canvas.getGraphicsContext2D();
         context.setLineWidth(getSettings().getLineWidth());
+        history = new History();
 
-        handleMouseClick(canvas);
-        handleMouseDrag(canvas);
-        handleMouseReleased(canvas);
+        // Clear context
+        history.addToDrawing((n, context) -> {
+            context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            return null;
+        });
+
+        handleMouseClick(canvas, history);
+        handleMouseDrag(canvas, history);
+        handleMouseReleased(canvas, history);
 
         getChildren().addAll(canvas);
     }
@@ -37,14 +50,21 @@ public class DrawingBoard extends AnchorPane implements SettingsChangeListenable
         context.setLineWidth(newSettings.getLineWidth());
         context.setStroke(newSettings.getColor());
         context.setFill(newSettings.getFillColor());
-        System.out.println(newSettings.getSelectedButton());
+
+        renderer = UIContext.get().getRenderer(newSettings.getSelectedShapeClass());
     }
 
-    private void handleMouseClick(Canvas canvas) {
+    private void handleMouseClick(Canvas canvas, History history) {
         canvas.setOnMousePressed(e -> {
+            if (renderer == null) {
+                return;
+            }
+            renderer.startDrawing(e, history);
+            Holder shapeHolder = new Holder();
+            history.getDrawingCommands().forEach(command ->
+                shapeHolder.setShape(command.apply(shapeHolder.getShape(), context)));
 //            if (drowbtn.isSelected()) {
-                context.beginPath();
-                context.lineTo(e.getX(), e.getY());
+//                context.lineTo(e.getX(), e.getY());
             /*} else if (rubberbtn.isSelected()) {
                 double lineWidth = context.getLineWidth();
                 context.clearRect(e.getX() - lineWidth / 2, e.getY() - lineWidth / 2, lineWidth, lineWidth);
@@ -67,11 +87,18 @@ public class DrawingBoard extends AnchorPane implements SettingsChangeListenable
         });
     }
 
-    private void handleMouseDrag(Canvas canvas) {
+    private void handleMouseDrag(Canvas canvas, History history) {
         canvas.setOnMouseDragged(e -> {
-//            if (drowbtn.isSelected()) {
-                context.lineTo(e.getX(), e.getY());
-                context.stroke();
+            if (renderer == null) {
+                return;
+            }
+            renderer.processDrawing(e, history);
+            Holder shapeHolder = new Holder();
+            history.getDrawingCommands().forEach(command ->
+                shapeHolder.setShape(command.apply(shapeHolder.getShape(), context)));
+//            if (drowbtn.isSelected())
+//            context.lineTo(e.getX(), e.getY());
+//            context.stroke();
             /*} else if (rubberbtn.isSelected()) {
                 double lineWidth = context.getLineWidth();
                 context.clearRect(e.getX() - lineWidth / 2, e.getY() - lineWidth / 2, lineWidth, lineWidth);
@@ -79,12 +106,19 @@ public class DrawingBoard extends AnchorPane implements SettingsChangeListenable
         });
     }
 
-    private void handleMouseReleased(Canvas canvas) {
+    private void handleMouseReleased(Canvas canvas, History history) {
         canvas.setOnMouseReleased(e -> {
+            if (renderer == null) {
+                return;
+            }
+            renderer.endDrawing(e, history);
+            Holder shapeHolder = new Holder();
+            history.getDrawingCommands().forEach(command ->
+                shapeHolder.setShape(command.apply(shapeHolder.getShape(), context)));
 //            if (drowbtn.isSelected()) {
-                context.lineTo(e.getX(), e.getY());
-                context.stroke();
-                context.closePath();
+//                context.lineTo(e.getX(), e.getY());
+//                context.stroke();
+//                context.closePath();
             /*} else if (rubberbtn.isSelected()) {
                 double lineWidth = context.getLineWidth();
                 context.clearRect(e.getX() - lineWidth / 2, e.getY() - lineWidth / 2, lineWidth, lineWidth);
@@ -140,34 +174,15 @@ public class DrawingBoard extends AnchorPane implements SettingsChangeListenable
         });
     }
 
-    private class ResizableCanvas extends Canvas {
-        public ResizableCanvas() {
-            // Redraw canvas when size changes.
-            widthProperty().addListener(evt -> draw());
-            heightProperty().addListener(evt -> draw());
+    private class Holder {
+        Shape shape;
+
+        public Shape getShape() {
+            return shape;
         }
 
-        private void draw() {
-            double width = getWidth();
-            double height = getHeight();
-
-            GraphicsContext gc = getGraphicsContext2D();
-            gc.clearRect(0, 0, width, height);
-        }
-
-        @Override
-        public boolean isResizable() {
-            return true;
-        }
-
-        @Override
-        public double prefWidth(double height) {
-            return getWidth();
-        }
-
-        @Override
-        public double prefHeight(double width) {
-            return getHeight();
+        public void setShape(Shape shape) {
+            this.shape = shape;
         }
     }
 

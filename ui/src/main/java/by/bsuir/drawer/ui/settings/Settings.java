@@ -3,9 +3,10 @@ package by.bsuir.drawer.ui.settings;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javafx.scene.control.Control;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+
+import by.bsuir.drawer.model.shape.Shape;
 
 
 /**
@@ -44,7 +45,7 @@ public class Settings implements Serializable {
      */
     private Font font;
 
-    private Control selectedButton;
+    private Class<? extends Shape> selectedShapeClass;
 
     public Color getColor() {
         return color;
@@ -78,12 +79,12 @@ public class Settings implements Serializable {
         this.font = font;
     }
 
-    public Control getSelectedButton() {
-        return selectedButton;
+    public Class<? extends Shape> getSelectedShapeClass() {
+        return selectedShapeClass;
     }
 
-    public void setSelectedButton(Control selectedButton) {
-        this.selectedButton = selectedButton;
+    public void setSelectedShapeClass(Class<? extends Shape> selectedShapeClass) {
+        this.selectedShapeClass = selectedShapeClass;
     }
 
     @Override
@@ -94,13 +95,13 @@ public class Settings implements Serializable {
         return Double.compare(settings.lineWidth, lineWidth) == 0 &&
             Objects.equals(color, settings.color) &&
             Objects.equals(fillColor, settings.fillColor) &&
-            Objects.equals(selectedButton, settings.selectedButton) &&
+            Objects.equals(selectedShapeClass, settings.selectedShapeClass) &&
             Objects.equals(font, settings.font);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(color, fillColor, lineWidth, selectedButton, font);
+        return Objects.hash(color, fillColor, lineWidth, selectedShapeClass, font);
     }
 
     @Override
@@ -110,7 +111,7 @@ public class Settings implements Serializable {
         copy.color = this.color;
         copy.fillColor = this.fillColor;
         copy.font = this.font;
-        copy.selectedButton = this.selectedButton;
+        copy.selectedShapeClass = this.selectedShapeClass;
         return copy;
     }
 }
